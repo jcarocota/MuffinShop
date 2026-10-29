@@ -28,6 +28,7 @@ import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.RadioButton
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.layout.ContentScale
@@ -38,6 +39,11 @@ import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.airbnb.lottie.compose.LottieAnimation
+import com.airbnb.lottie.compose.LottieCompositionSpec
+import com.airbnb.lottie.compose.LottieConstants
+import com.airbnb.lottie.compose.animateLottieCompositionAsState
+import com.airbnb.lottie.compose.rememberLottieComposition
 import com.ebc.muffinshop.R
 import com.ebc.muffinshop.model.Paso
 import com.ebc.muffinshop.model.PedidoUiState
@@ -356,12 +362,28 @@ fun ExitoScreen(state: PedidoUiState = PedidoUiState(), onNuevoPedido: () -> Uni
         horizontalAlignment = Alignment.CenterHorizontally,
         verticalArrangement = Arrangement.Center
     ) {
-        Image(
+        /*Image(
             painter = painterResource(R.drawable.muffin_exito),
             contentDescription = "Muffin acompañado de un símbolo de confirmación",
             modifier = Modifier.fillMaxWidth().height(245.dp),
             contentScale = ContentScale.Fit
+        )*/
+
+        val composition by rememberLottieComposition(
+            LottieCompositionSpec.RawRes(R.raw.check)
         )
+
+        val progress by animateLottieCompositionAsState(
+            composition  = composition,
+            iterations = LottieConstants.IterateForever
+        )
+
+        LottieAnimation(
+            composition = composition,
+            progress = { progress },
+            modifier = Modifier.fillMaxWidth().height(250.dp)
+        )
+
         Spacer(Modifier.height(16.dp))
         Text(
             "¡Orden enviada!",
